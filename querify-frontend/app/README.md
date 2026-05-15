@@ -29,8 +29,36 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy Frontend Only on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This repository is a monorepo. To deploy only the frontend, deploy `querify-frontend/app` as the Vercel project root.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Option 1: Vercel Dashboard (recommended)
+
+1. Import the repository in Vercel.
+2. In **Project Settings -> Root Directory**, select `querify-frontend/app`.
+3. Keep defaults:
+	- Framework Preset: `Next.js`
+	- Build Command: `npm run build`
+	- Output Directory: `.next`
+4. Add environment variable:
+	- `NEXT_PUBLIC_API_BASE` = your deployed backend URL, for example `https://your-backend-domain.com/api`
+5. Deploy.
+
+### Option 2: Vercel CLI
+
+Run from repository root:
+
+```bash
+npx vercel --cwd querify-frontend/app
+```
+
+For production deployment:
+
+```bash
+npx vercel --cwd querify-frontend/app --prod
+```
+
+### Important
+
+If `NEXT_PUBLIC_API_BASE` is not set in Vercel, the app falls back to `http://localhost:8080/api`, which will not work in production.
